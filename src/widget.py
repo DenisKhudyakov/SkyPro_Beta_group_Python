@@ -24,4 +24,5 @@ def date_time_formatter(data_and_time: str) -> str:
     :return:
     """
     pattern = "%Y-%m-%dT%H:%M:%S"
-    return datetime.strptime(data_and_time[:-7], pattern).strftime("%d.%m.%Y")
+    format = "%d.%m.%Y"
+    return datetime.strptime(data_and_time[:-7], pattern).strftime(format)
