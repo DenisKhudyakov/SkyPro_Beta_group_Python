@@ -27,4 +27,4 @@ def date_time_formatter(data_and_time: str) -> str:
     return datetime.strptime(data_and_time[:-7], pattern).strftime('%d.%m.%Y')
 
 
-print(date_time_formatter("2018-07-11T02:26:18.671407"))
+
