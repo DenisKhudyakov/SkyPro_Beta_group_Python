@@ -11,8 +11,8 @@ def bank_data_conversion(bank_data: str) -> str:
     """
     bank_data_list = bank_data.split()
     if bank_data.startswith("Счет"):
-        return ' '.join([bank_data_list[0], maskin_bil_number(bank_data_list[1])])
-    return ' '.join([bank_data_list[0], masking_the_card(bank_data_list[1])])
+        return " ".join([bank_data_list[0], maskin_bil_number(bank_data_list[1])])
+    return " ".join([bank_data_list[0], masking_the_card(bank_data_list[1])])
 
 
 def date_time_formatter(data_and_time: str) -> str:
@@ -23,8 +23,5 @@ def date_time_formatter(data_and_time: str) -> str:
     :param data_and_time:
     :return:
     """
-    pattern = '%Y-%m-%dT%H:%M:%S'
-    return datetime.strptime(data_and_time[:-7], pattern).strftime('%d.%m.%Y')
-
-
-
+    pattern = "%Y-%m-%dT%H:%M:%S"
+    return datetime.strptime(data_and_time[:-7], pattern).strftime("%d.%m.%Y")
