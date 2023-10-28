@@ -3,7 +3,7 @@ from datetime import datetime
 from widget import date_time_formatter
 
 
-def filter_operations(operation_list: list, state_value="EXECUTED") -> list:
+def filter_operations(operation_list: list, state_value: str = "EXECUTED") -> list:
     """
         функцию, которая принимает на вход список словарей и значение для ключа state
         (опциональный параметр со значением по умолчанию
@@ -18,7 +18,7 @@ def filter_operations(operation_list: list, state_value="EXECUTED") -> list:
     return list(filter(lambda x: x["state"] == state_value, operation_list))
 
 
-def sorted_operation(operation_list: list[dict], revers=False) -> list[dict]:
+def sorted_operation(operation_list: list[dict], revers: bool = False) -> list[dict]:
     """
         функцию, которая принимает на вход список словарей и возвращает новый список,
         в котором исходные словари отсортированы по убыванию даты (ключ
