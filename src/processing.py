@@ -18,7 +18,7 @@ def filter_operations(operation_list: list, state_value="EXECUTED") -> list:
     return list(filter(lambda x: x["state"] == state_value, operation_list))
 
 
-def sorted_operation(operation_list: list, revers=True) -> list:
+def sorted_operation(operation_list: list[dict], revers=False) -> list:
     """
         функцию, которая принимает на вход список словарей и возвращает новый список,
         в котором исходные словари отсортированы по убыванию даты (ключ
@@ -29,8 +29,4 @@ def sorted_operation(operation_list: list, revers=True) -> list:
         :param revers:
         :return:
     """
-    return sorted(
-        operation_list,
-        key=lambda date: datetime.strptime(date_time_formatter(date["date"]), "%d.%m.%Y"),
-        reverse=revers,
-    )
+    return sorted(operation_list, key=lambda date: date["date"], reverse=revers)
