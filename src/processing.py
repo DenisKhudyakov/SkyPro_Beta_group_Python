@@ -1,6 +1,4 @@
-from datetime import datetime
 
-from widget import date_time_formatter
 
 
 def filter_operations(operation_list: list, state_value: str = "EXECUTED") -> list:
@@ -11,7 +9,7 @@ def filter_operations(operation_list: list, state_value: str = "EXECUTED") -> li
     ) и возвращает новый список, содержащий только те словари, у которых ключ
     state
      содержит переданное в функцию значение
-        :param operation_list: список банковских операций
+        :param operation_list: список банковских операций/
         :param state_value: параметр, по котоому нужно делать фильтацию
         :return: list: отфильтрованный список банковских операций
     """

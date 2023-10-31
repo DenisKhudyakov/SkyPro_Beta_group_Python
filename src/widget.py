@@ -1,18 +1,20 @@
 from datetime import datetime
 
-from masks import maskin_bil_number, masking_the_card
+from src.masks import maskin_bil_number, masking_the_card
 
 
 def bank_data_conversion(bank_data: str) -> str:
     """
     Функиця преобразования банковских данных
-    :param bank_data: строка в формате, например Visa Platinum 7000 7922 8960 6361
+    :param bank_data: строка в формате, например Visa Classic 6831982476737658
     :return: строка в формате, например Visa Platinum 7000 79** **** 6361
     """
     bank_data_list = bank_data.split()
     if bank_data.startswith("Счет"):
-        return " ".join([bank_data_list[0], maskin_bil_number(bank_data_list[1])])
-    return " ".join([bank_data_list[0], masking_the_card(bank_data_list[1])])
+        return " ".join([bank_data_list[0], maskin_bil_number(bank_data_list[1])]) if bank_data else ''
+    elif len(bank_data.split()) >= 3:
+        return " ".join([bank_data_list[0],bank_data_list[1], masking_the_card(bank_data_list[2])]) if bank_data else ''
+    return " ".join([bank_data_list[0], masking_the_card(bank_data_list[1])]) if bank_data else ''
 
 
 def date_time_formatter(data_and_time: str) -> str:
@@ -25,4 +27,6 @@ def date_time_formatter(data_and_time: str) -> str:
     """
     pattern = "%Y-%m-%dT%H:%M:%S"
     format = "%d.%m.%Y"
-    return datetime.strptime(data_and_time[:-7], pattern).strftime(format)
+    return datetime.strptime(data_and_time[:-7], pattern).strftime(format) if data_and_time else 'Что-то пошло не так...'
+
+print(bank_data_conversion('Visa Classic 6831982476737658'))
