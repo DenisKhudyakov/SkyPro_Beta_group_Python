@@ -18,7 +18,7 @@ def test_filter_operations(bank_data: list) -> None:
         {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
         {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
     ]
-    assert filter_operations([]) == None
+    assert filter_operations([]) is None
 
 
 def test_sorted_operation(bank_data: list) -> None:
@@ -28,4 +28,4 @@ def test_sorted_operation(bank_data: list) -> None:
         {"id": 615064591, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"},
         {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
     ]
-    assert sorted_operation([]) == None
+    assert sorted_operation([]) is None
