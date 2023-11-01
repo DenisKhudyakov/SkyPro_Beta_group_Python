@@ -14,6 +14,3 @@ def maskin_bil_number(bill_number: str) -> str:
     **4305  # выход функции
     """
     return "".join(["**", bill_number[-4:]]) if bill_number else ""
-
-
-print()
