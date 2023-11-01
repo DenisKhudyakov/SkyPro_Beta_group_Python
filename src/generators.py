@@ -27,6 +27,19 @@ def transaction_descriptions(trans_list: list) -> Callable:
         yield operation["description"]
 
 
+def card_number_generator(start: int, end: int) -> Callable:
+    """
+    Генератор номеров кард
+    :param start: inr
+    :param end: inr
+    :return: generator
+    """
+    number = "0000000000000000"
+    for i in range(start, end + 1):
+        number_card = number[0 : -len(str(i))] + str(i)
+        yield " ".join([number_card[0:4], number_card[4:8], number_card[8:12], number_card[12:16]])
+
+
 with open("transactions.json", "r") as file:
     transactions = json.load(file)
     usd_transactions = filter_by_currency(transactions, "RUB")
@@ -35,3 +48,6 @@ with open("transactions.json", "r") as file:
     descriptions = transaction_descriptions(transactions)
     for _ in range(5):
         print(next(descriptions))
+
+for card_number in card_number_generator(1, 5):
+    print(card_number)
