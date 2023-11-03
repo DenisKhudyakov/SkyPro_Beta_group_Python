@@ -28,12 +28,12 @@ def transaction_descriptions(trans_list: list) -> Generator:
 
 def card_number_generator(start: int, end: int) -> Generator:
     """
-    Генератор номеров кард
+    Генератор номеров карт
     :param start: inr
     :param end: inr
     :return: generator
     """
-    number_card_ver2 = ((16*'0')[0:-len(str(number))]+str(number) for number in range(1, 5+1))
+    number_card_ver2 = ((16 * "0")[0 : -len(str(number))] + str(number) for number in range(start, end + 1))
     # number = "0000000000000000"
     # for i in range(start, end + 1):
     #     number_card = number[0 : -len(str(i))] + str(i)
