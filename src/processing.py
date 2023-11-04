@@ -1,7 +1,7 @@
 from typing import Any
 
 
-def filter_operations(operation_list: list[Any] | None, state_value: str = "EXECUTED") -> list[Any]:
+def filter_operations(operation_list: list[dict[Any, Any]], state_value: str = "EXECUTED") -> list[Any] | None:
     """
         функцию, которая принимает на вход список словарей и значение для ключа state
         (опциональный параметр со значением по умолчанию
@@ -16,7 +16,7 @@ def filter_operations(operation_list: list[Any] | None, state_value: str = "EXEC
     return list(filter(lambda x: x["state"] == state_value, operation_list)) if operation_list else None
 
 
-def sorted_operation(operation_list: list[dict[Any, Any]] | None, revers: bool = False) -> list[dict[Any, Any]]:
+def sorted_operation(operation_list: list[dict[Any, Any]], revers: bool = False) -> list[dict[Any, Any]] | None:
     """
         функцию, которая принимает на вход список словарей и возвращает новый список,
         в котором исходные словари отсортированы по убыванию даты (ключ
