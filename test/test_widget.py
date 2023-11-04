@@ -15,9 +15,19 @@ from src.widget import bank_data_conversion, date_time_formatter
     ],
 )
 def test_bank_data_conversion(bank_data: str, result: str) -> None:
+    """
+    Тестовая функция проверяющая правильность форматирования номера карты и номера счета.
+    :param bank_data: номер счета/номер карты
+    :param result: ожидаемый отформатированный результат.
+    :return: тестовые функции ничего не возвращщают
+    """
     assert bank_data_conversion(bank_data) == result
 
 
 def test_date_time_formatter() -> None:
+    """
+    Тестовая функция, проверяющая форматирование даты и времени к определённому паттерну.
+    :return: Тестовые фунцкии ничего не возвращают
+    """
     assert date_time_formatter("2018-07-11T02:26:18.671407") == "11.07.2018"
     assert date_time_formatter("") == "Что-то пошло не так..."
