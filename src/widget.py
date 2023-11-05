@@ -32,8 +32,8 @@ def date_time_formatter(data_and_time: str) -> str:
     функцию, которая принимает на вход строку,
     вида "2018-07-11T02:26:18.671407"
     и возвращает строку с датой в виде "11.07.2018"
-    :param data_and_time:
-    :return:
+    :param data_and_time: строковое значение даты и времени
+    :return: отформатированная дата
     """
     pattern = "%Y-%m-%dT%H:%M:%S"
     format = "%d.%m.%Y"
