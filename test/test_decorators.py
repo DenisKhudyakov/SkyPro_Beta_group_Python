@@ -52,4 +52,4 @@ def test_my_function2(numbers_and_data: tuple) -> None:
     :return: тестовая функция ничего не возвращает
     """
     date_time, a, b = numbers_and_data
-    assert my_function2(a, b) == None
+    assert my_function2(a, b) is None
