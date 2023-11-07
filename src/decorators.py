@@ -1,6 +1,6 @@
 import datetime
 import functools
-from typing import Callable
+from typing import Callable, Any
 
 
 def log(*, filename: str = "") -> Callable:
@@ -13,25 +13,26 @@ def log(*, filename: str = "") -> Callable:
     def wrapper(funk: Callable) -> Callable:
         @functools.wraps(funk)
         def inner(*args, **kwargs):
+            date_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             try:
                 funk(*args, **kwargs)
                 if filename:
                     with open(filename, "a") as file:
-                        file.write(f"{datetime.datetime.now()} {funk.__name__} ok\n")
+                        file.write(f"{date_time} {funk.__name__} ok\n")
                 else:
-                    print(f"{datetime.datetime.now()}{funk.__name__}\n")
+                    print(f"{date_time}{funk.__name__}\n")
             except Exception as ex:
                 if filename:
                     with open(filename, "a") as f:
                         f.write(
                             "{} {} error: <{}>. Inputs: ({}, {})\n".format(
-                                datetime.datetime.now(), funk.__name__, str(ex), *args
+                                date_time, funk.__name__, str(ex), *args
                             )
                         )
                 else:
                     print(
                         "{} {} error: <{}>. Inputs: ({}, {})\n".format(
-                            datetime.datetime.now(), funk.__name__, str(ex), *args
+                            date_time, funk.__name__, str(ex), *args
                         )
                     )
 
