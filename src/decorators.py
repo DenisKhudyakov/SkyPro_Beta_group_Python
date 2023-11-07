@@ -6,16 +6,16 @@ from typing import Callable, Any
 def log(*, filename: str = "") -> Callable:
     """
     Декоратор, который логирует вызов функций.
-    :param file_name: файл куда записывать логи, по умолчанию его нет.
+    :param filename: файл куда записывать логи, по умолчанию его нет.
     :return: Возвращаем задекорированную функцию
     """
 
-    def wrapper(funk: Callable) -> Callable:
-        @functools.wraps(funk)
+    def wrapper(func: Callable) -> Callable:
+        @functools.wraps(func)
         def inner(*args, **kwargs):
             date_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             try:
-                funk(*args, **kwargs)
+                func(*args, **kwargs)
                 if filename:
                     with open(filename, "a") as file:
                         file.write(f"{date_time} {funk.__name__} ok\n")
