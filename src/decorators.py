@@ -20,7 +20,7 @@ def log(*, filename: str = "") -> Callable:
                     with open(filename, "a") as file:
                         file.write(f"{date_time} {funk.__name__} ok\n")
                 else:
-                    print(f"{date_time}{funk.__name__}\n")
+                    print(f"{date_time} {funk.__name__}\n")
             except Exception as ex:
                 if filename:
                     with open(filename, "a") as f:
