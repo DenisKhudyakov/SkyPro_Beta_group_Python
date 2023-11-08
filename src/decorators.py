@@ -32,7 +32,7 @@ def log(*, filename: str = "") -> Callable:
                 else:
                     print(
                         "{} {} error: <{}>. Inputs: ({}, {})\n".format(
-                            date_time, func.__name__, str(ex), *args
+                            date_time, func.__name__, str(ex), args, kwargs
                         )
                     )
 
