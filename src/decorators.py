@@ -1,37 +1,38 @@
 import datetime
 import functools
-from typing import Callable
+from typing import Callable, Any
 
 
 def log(*, filename: str = "") -> Callable:
     """
     Декоратор, который логирует вызов функций.
-    :param file_name: файл куда записывать логи, по умолчанию его нет.
+    :param filename: файл куда записывать логи, по умолчанию его нет.
     :return: Возвращаем задекорированную функцию
     """
 
-    def wrapper(funk: Callable) -> Callable:
-        @functools.wraps(funk)
+    def wrapper(func: Callable) -> Callable:
+        @functools.wraps(func)
         def inner(*args, **kwargs):
+            date_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             try:
-                funk(*args, **kwargs)
+                func(*args, **kwargs)
                 if filename:
                     with open(filename, "a") as file:
-                        file.write(f"{datetime.datetime.now()} {funk.__name__} ok\n")
+                        file.write(f"{date_time} {func.__name__} ok\n")
                 else:
-                    print(f"{datetime.datetime.now()}{funk.__name__}\n")
+                    print(f"{date_time} {func.__name__}\n")
             except Exception as ex:
                 if filename:
                     with open(filename, "a") as f:
                         f.write(
                             "{} {} error: <{}>. Inputs: ({}, {})\n".format(
-                                datetime.datetime.now(), funk.__name__, str(ex), *args
+                                date_time, func.__name__, str(ex), args, kwargs
                             )
                         )
                 else:
                     print(
                         "{} {} error: <{}>. Inputs: ({}, {})\n".format(
-                            datetime.datetime.now(), funk.__name__, str(ex), *args
+                            date_time, func.__name__, str(ex), args, kwargs
                         )
                     )
 
