@@ -1,0 +1,4 @@
+2023-11-11 16:27:36 my_function ok
+2023-11-11 16:27:36 my_function1 error: <division by zero>. Inputs: ((2, 2), {})
+2023-11-11 16:28:35 my_function ok
+2023-11-11 16:28:35 my_function1 error: <division by zero>. Inputs: ((2, 2), {})
