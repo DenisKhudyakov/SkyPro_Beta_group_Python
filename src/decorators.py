@@ -13,7 +13,7 @@ def log(*, filename: str = "") -> Callable:
     def wrapper(func: Callable) -> Callable:
         @functools.wraps(func)
         def inner(*args, **kwargs):
-            date_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            date_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             try:
                 func(*args, **kwargs)
                 if filename:
@@ -31,9 +31,7 @@ def log(*, filename: str = "") -> Callable:
                         )
                 else:
                     print(
-                        "{} {} error: <{}>. Inputs: ({}, {})\n".format(
-                            date_time, func.__name__, str(ex), args, kwargs
-                        )
+                        "{} {} error: <{}>. Inputs: ({}, {})\n".format(date_time, func.__name__, str(ex), args, kwargs)
                     )
 
         return inner
