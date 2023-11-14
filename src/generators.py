@@ -11,9 +11,12 @@ def filter_by_currency(bank_obj: Any, currency: str) -> Generator:
     # Первое решение
     # return filter(lambda money_type: money_type["operationAmount"]["currency"]["code"] == currency, bank_obj)
     # Второе решение
+
     for money_type in bank_obj:
         if money_type["operationAmount"]["currency"]["code"] == currency:
             yield money_type
+
+
 
 
 def transaction_descriptions(trans_list: list) -> Generator:
