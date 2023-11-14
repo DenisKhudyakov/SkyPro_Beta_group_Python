@@ -1,6 +1,24 @@
-from src.generators import filter_by_currency
-import os
 import json
+import os
+from typing import Any
+
+from src.generators import filter_by_currency
+
+
+def get_json(any_path: str) -> list[dict[Any, Any]]:
+    """
+    Функция получает на вход путь до файла, и выводит список со словарями
+    :param any_path: путь в виде строки
+    :return: словарь, если файл json без ошибок
+    """
+    try:
+        with open(any_path, "r", encoding="UTF-8") as file:
+            return json.load(file)
+    except json.JSONDecodeError:
+        return []
+    except (TypeError, KeyError, ValueError):
+        return []
+
 
 def transit_calculation(operation: dict) -> float | ValueError:
     """
@@ -18,10 +36,9 @@ def transit_calculation(operation: dict) -> float | ValueError:
         return ex
 
 
-if __name__ == '__main__':
-
-    with open(os.path.join('..', 'data', 'operations.json'), 'r') as file:
+if __name__ == "__main__":
+    with open(os.path.join("..", "data", "operations.json"), "r") as file:
         bank_data = json.load(file)
         print(len(bank_data))
-        for operation in filter_by_currency(bank_obj=bank_data, currency='USD'):
+        for operation in filter_by_currency(bank_obj=bank_data, currency="USD"):
             print(transit_calculation(operation))

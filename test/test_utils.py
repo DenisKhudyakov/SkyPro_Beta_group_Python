@@ -3,9 +3,10 @@ import os
 
 import pytest
 
+from data.config import FILE_PATH
 from src.generators import filter_by_currency
 from src.utils import transit_calculation
-from data.config import FILE_PATH
+
 
 @pytest.fixture
 def fixture():
