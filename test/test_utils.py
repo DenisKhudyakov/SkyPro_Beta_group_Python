@@ -5,11 +5,11 @@ import pytest
 
 from src.generators import filter_by_currency
 from src.utils import transit_calculation
-
+from data.config import FILE_PATH
 
 @pytest.fixture
 def fixture():
-    with open(os.path.join("..", "data", "operations.json"), "r") as file:
+    with open(str(FILE_PATH), "r") as file:
         bank_data = json.load(file)
         for operation in filter_by_currency(bank_obj=bank_data, currency="RUB"):
             return operation
@@ -17,7 +17,7 @@ def fixture():
 
 @pytest.fixture
 def fixture_with_usd():
-    with open(os.path.join("..", "data", "operations.json"), "r") as file:
+    with open(str(FILE_PATH), "r") as file:
         bank_data = json.load(file)
         for operation in filter_by_currency(bank_obj=bank_data, currency="USD"):
             return operation
