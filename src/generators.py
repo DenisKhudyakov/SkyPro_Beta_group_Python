@@ -17,8 +17,6 @@ def filter_by_currency(bank_obj: Any, currency: str) -> Generator:
             yield money_type
 
 
-
-
 def transaction_descriptions(trans_list: list) -> Generator:
     """
     генератор, который принимает список словарей и возвращает описание каждой операции по очереди.

@@ -1,16 +1,27 @@
+import functools
 import json
 import os
-import requests
-import functools
 from typing import Any, Callable
-from src.generators import filter_by_currency
+
+import requests
 from dotenv import load_dotenv
+
+from src.generators import filter_by_currency
+
+
 def get_currency_exchange_rate(currency: str) -> float:
-    with open('currency.json', 'r', encoding='UTF-8') as file:
+    with open("currency.json", "r", encoding="UTF-8") as file:
         cbr_data = json.load(file)
     return cbr_data["Valute"][currency]["Value"]
 
-def converter_change(func_with_currency_rate: Callable, currensy: str = 'USD'):
+
+def converter_change(func_with_currency_rate: Callable, currensy: str = "USD"):
+    """
+    Декоратор конвертер валюты
+    :param func_with_currency_rate: функция, которая даёт нам текущий курс
+    :param currensy: Валюта, по умолчанию доллары
+    :return: Возвращаем преобразованную функцию
+    """
     def wrapper(func):
         @functools.wraps(func)
         def inner(*args, **kwargs):
@@ -19,8 +30,11 @@ def converter_change(func_with_currency_rate: Callable, currensy: str = 'USD'):
             except ValueError:
                 result = round(float(args[0]["operationAmount"]["amount"]) * func_with_currency_rate(currensy), 2)
             return result
+
         return inner
+
     return wrapper
+
 
 def get_json(any_path: str) -> list[dict[Any, Any]]:
     """
@@ -36,6 +50,7 @@ def get_json(any_path: str) -> list[dict[Any, Any]]:
     except (TypeError, KeyError, ValueError):
         return []
 
+
 @converter_change(get_currency_exchange_rate)
 def transit_calculation(operation: dict) -> float | ValueError:
     """
@@ -50,6 +65,7 @@ def transit_calculation(operation: dict) -> float | ValueError:
     else:
         raise ValueError("Транзакция выполнена не в рублях. Укажите транзакцию в рублях")
 
+
 def get_api(url: str) -> None:
     """
     Функция отправляет запрос на сайт ЦБ РФ и получает курс валют в формате JSON
@@ -60,11 +76,17 @@ def get_api(url: str) -> None:
     url_api = os.getenv(url)
     response = requests.get(url_api)
     data_dict = response.json()
-    with open('currency.json', 'w') as file:
+    with open("currency.json", "w") as file:
         json.dump(data_dict, file, indent=4)
 
+
 def get_currency_exchange_rate(currency: str) -> float:
-    with open('currency.json', 'r', encoding='UTF-8') as file:
+    """
+    Функция получения курса валют
+    :param currency: Интересующая валюта
+    :return: курс
+    """
+    with open("currency.json", "r", encoding="UTF-8") as file:
         cbr_data = json.load(file)
     return cbr_data["Valute"][currency]["Value"]
 
@@ -74,6 +96,5 @@ if __name__ == "__main__":
         bank_data = json.load(file)
         for operation in filter_by_currency(bank_obj=bank_data, currency="USD"):
             print(transit_calculation(operation))
+
     # get_api('URL')
-
-
