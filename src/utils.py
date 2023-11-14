@@ -27,13 +27,12 @@ def transit_calculation(operation: dict) -> float | ValueError:
     :param operation: словарь с транзакцией
     :return: сумма перевода или исключение
     """
-    try:
-        if operation["operationAmount"]["currency"]["code"] == "RUB":
-            return float(operation["operationAmount"]["amount"])
-        else:
-            raise ValueError("Транзакция выполнена не в рублях. Укажите транзакцию в рублях")
-    except ValueError as ex:
-        return ex
+
+    if operation["operationAmount"]["currency"]["code"] == "RUB":
+        return float(operation["operationAmount"]["amount"])
+    else:
+        raise ValueError("Транзакция выполнена не в рублях. Укажите транзакцию в рублях")
+
 
 
 if __name__ == "__main__":
