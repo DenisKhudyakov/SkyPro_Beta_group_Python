@@ -72,19 +72,20 @@ def transit_calculation(operation: dict) -> float | ValueError:
         raise ValueError("Транзакция выполнена не в рублях. Укажите транзакцию в рублях")
 
 
-def get_api(url: str) -> None:
+def get_api() -> tuple:
     """
     Функция отправляет запрос на сайт ЦБ РФ и получает курс валют в формате JSON
     :param url: строка с адресом
     :return: ничего не возвращаем
     """
     load_dotenv()
-    url_api = os.getenv(url)
+    url_api = os.getenv('URL')
     if url_api is not None:
         response = requests.get(url_api)
     data_dict = response.json()
     with open("currency.json", "w") as file:
         json.dump(data_dict, file, indent=4)
+    return data_dict, response
 
 
 if __name__ == "__main__":
@@ -93,4 +94,4 @@ if __name__ == "__main__":
         for operation in filter_by_currency(bank_obj=bank_data, currency="USD"):
             print(transit_calculation(operation))
 
-    # get_api('URL')
+    get_api()
