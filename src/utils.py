@@ -10,6 +10,11 @@ from src.generators import filter_by_currency
 
 
 def get_currency_exchange_rate(currency: str) -> float:
+    """
+    Функция получения курса валют
+    :param currency: Интересующая валюта
+    :return: курс
+    """
     with open("currency.json", "r", encoding="UTF-8") as file:
         cbr_data = json.load(file)
     return cbr_data["Valute"][currency]["Value"]
@@ -22,6 +27,7 @@ def converter_change(func_with_currency_rate: Callable, currensy: str = "USD"):
     :param currensy: Валюта, по умолчанию доллары
     :return: Возвращаем преобразованную функцию
     """
+
     def wrapper(func):
         @functools.wraps(func)
         def inner(*args, **kwargs):
@@ -74,21 +80,11 @@ def get_api(url: str) -> None:
     """
     load_dotenv()
     url_api = os.getenv(url)
-    response = requests.get(url_api)
+    if url_api is not None:
+        response = requests.get(url_api)
     data_dict = response.json()
     with open("currency.json", "w") as file:
         json.dump(data_dict, file, indent=4)
-
-
-def get_currency_exchange_rate(currency: str) -> float:
-    """
-    Функция получения курса валют
-    :param currency: Интересующая валюта
-    :return: курс
-    """
-    with open("currency.json", "r", encoding="UTF-8") as file:
-        cbr_data = json.load(file)
-    return cbr_data["Valute"][currency]["Value"]
 
 
 if __name__ == "__main__":

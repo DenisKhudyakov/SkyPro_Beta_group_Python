@@ -1,6 +1,6 @@
 import json
 
-from src.generators import *
+from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
 from src.processing import sorted_operation
 
 if __name__ == "__main__":

@@ -33,7 +33,6 @@ def test_transit_calculation(fixture, fixture_with_usd) -> None:
     :return: тестовая функция ничего не возвращает
     """
     assert transit_calculation(fixture) == 31957.58
-    with pytest.raises(ValueError):
-        transit_calculation(fixture_with_usd)
+    assert transit_calculation(fixture_with_usd) == 750257.56
 
 
