@@ -1,18 +1,16 @@
 import json
-import os
 from typing import Any
 from unittest.mock import patch
 
 import pytest
-import requests
 
-from data.config import FILE_PATH
+from data.config import FILE_PATH, FILE_PATH_CURRENCY
 from src.generators import filter_by_currency
 from src.utils import get_api, transit_calculation
 
 
 @pytest.fixture
-def fixture():
+def fixture() -> Any:
     with open(str(FILE_PATH), "r") as file:
         bank_data = json.load(file)
         for operation in filter_by_currency(bank_obj=bank_data, currency="RUB"):
@@ -20,14 +18,14 @@ def fixture():
 
 
 @pytest.fixture
-def fixture_with_usd():
+def fixture_with_usd() -> Any:
     with open(str(FILE_PATH), "r") as file:
         bank_data = json.load(file)
         for operation in filter_by_currency(bank_obj=bank_data, currency="USD"):
             return operation
 
 
-def test_transit_calculation(fixture, fixture_with_usd) -> None:
+def test_transit_calculation(fixture: Any, fixture_with_usd: Any) -> None:
     """
     Тестирование функции transit_calculatio, в двух случаях, первый случай, когда она должна вывести сумму транзакции,
     второй случай исключение
@@ -47,7 +45,7 @@ def test_get(mock_get: Any) -> None:
     :return: тестовая функция ничего не возврщает
     """
     mock_get.return_value.ok = True
-    with open("currency.json") as f:
+    with open(FILE_PATH_CURRENCY) as f:
         data = json.load(f)
     mock_get.return_value.json.return_value = data
     result = get_api()[0]

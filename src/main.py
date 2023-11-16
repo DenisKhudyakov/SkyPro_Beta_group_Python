@@ -1,10 +1,10 @@
 import json
 
-from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
+from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 from src.processing import sorted_operation
 
 if __name__ == "__main__":
-    with open("transactions.json", "r") as file:
+    with open("../data/transactions.json", "r") as file:
         transactions = json.load(file)
         usd_transactions = filter_by_currency(transactions, "RUB")
         for _ in range(2):

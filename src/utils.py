@@ -6,21 +6,22 @@ from typing import Any, Callable
 import requests
 from dotenv import load_dotenv
 
+from data.config import FILE_PATH_CURRENCY
 from src.generators import filter_by_currency
 
 
-def get_currency_exchange_rate(currency: str) -> float:
+def get_currency_exchange_rate(currency: str) -> Any:
     """
     Функция получения курса валют
     :param currency: Интересующая валюта
     :return: курс
     """
-    with open("currency.json", "r", encoding="UTF-8") as file:
+    with open(FILE_PATH_CURRENCY, "r", encoding="UTF-8") as file:
         cbr_data = json.load(file)
     return cbr_data["Valute"][currency]["Value"]
 
 
-def converter_change(func_with_currency_rate: Callable, currensy: str = "USD"):
+def converter_change(func_with_currency_rate: Callable, currensy: str = "USD") -> Callable:
     """
     Декоратор конвертер валюты
     :param func_with_currency_rate: функция, которая даёт нам текущий курс
@@ -28,9 +29,9 @@ def converter_change(func_with_currency_rate: Callable, currensy: str = "USD"):
     :return: Возвращаем преобразованную функцию
     """
 
-    def wrapper(func):
+    def wrapper(func: Callable) -> Callable:
         @functools.wraps(func)
-        def inner(*args, **kwargs):
+        def inner(*args: Any, **kwargs: Any) -> Any:
             try:
                 result = func(*args, **kwargs)
             except ValueError:
@@ -42,7 +43,7 @@ def converter_change(func_with_currency_rate: Callable, currensy: str = "USD"):
     return wrapper
 
 
-def get_json(any_path: str) -> list[dict[Any, Any]]:
+def get_json(any_path: str) -> Any:
     """
     Функция получает на вход путь до файла, и выводит список со словарями
     :param any_path: путь в виде строки
@@ -79,7 +80,7 @@ def get_api() -> tuple:
     :return: ничего не возвращаем
     """
     load_dotenv()
-    url_api = os.getenv('URL')
+    url_api = os.getenv("URL")
     if url_api is not None:
         response = requests.get(url_api)
     data_dict = response.json()

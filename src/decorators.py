@@ -12,7 +12,7 @@ def log(*, filename: str = "") -> Callable:
 
     def wrapper(func: Callable) -> Callable:
         @functools.wraps(func)
-        def inner(*args, **kwargs):
+        def inner(*args: Any, **kwargs: Any) -> Any:
             date_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             try:
                 func(*args, **kwargs)
@@ -40,17 +40,17 @@ def log(*, filename: str = "") -> Callable:
 
 
 @log(filename="mylog.txt")
-def my_function(x, y):
+def my_function(x: int, y: int) -> int:
     return x + y
 
 
 @log(filename="mylog.txt")
-def my_function1(x, y):
+def my_function1(x: int, y: int) -> float:
     return x + y / 0
 
 
 @log()
-def my_function2(x, y):
+def my_function2(x: int, y: int) -> int:
     return x + y
 
 
