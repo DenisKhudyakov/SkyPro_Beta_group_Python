@@ -10,14 +10,27 @@ from data.config import FILE_PATH_CURRENCY
 from src.generators import filter_by_currency
 
 
+def get_api() -> tuple:
+    """
+    Функция отправляет запрос на сайт ЦБ РФ и получает курс валют в формате JSON
+    :param url: строка с адресом
+    :return: ничего не возвращаем
+    """
+    load_dotenv()
+    url_api = os.getenv("URL")
+    if url_api is not None:
+        response = requests.get(url_api)
+    data_dict = response.json()
+    return data_dict, response
+
+
 def get_currency_exchange_rate(currency: str) -> Any:
     """
     Функция получения курса валют
     :param currency: Интересующая валюта
     :return: курс
     """
-    with open(FILE_PATH_CURRENCY, "r", encoding="UTF-8") as file:
-        cbr_data = json.load(file)
+    cbr_data = get_api()[0]
     return cbr_data["Valute"][currency]["Value"]
 
 
@@ -54,8 +67,6 @@ def get_json(any_path: str) -> Any:
             return json.load(file)
     except json.JSONDecodeError:
         return []
-    except (TypeError, KeyError, ValueError):
-        return []
 
 
 @converter_change(get_currency_exchange_rate)
@@ -71,22 +82,6 @@ def transit_calculation(operation: dict) -> float | ValueError:
         return float(operation["operationAmount"]["amount"])
     else:
         raise ValueError("Транзакция выполнена не в рублях. Укажите транзакцию в рублях")
-
-
-def get_api() -> tuple:
-    """
-    Функция отправляет запрос на сайт ЦБ РФ и получает курс валют в формате JSON
-    :param url: строка с адресом
-    :return: ничего не возвращаем
-    """
-    load_dotenv()
-    url_api = os.getenv("URL")
-    if url_api is not None:
-        response = requests.get(url_api)
-    data_dict = response.json()
-    with open("currency.json", "w") as file:
-        json.dump(data_dict, file, indent=4)
-    return data_dict, response
 
 
 if __name__ == "__main__":

@@ -6,7 +6,7 @@ import pytest
 
 from data.config import FILE_PATH, FILE_PATH_CURRENCY
 from src.generators import filter_by_currency
-from src.utils import get_api, transit_calculation
+from src.utils import get_api, get_currency_exchange_rate, transit_calculation
 
 
 @pytest.fixture
@@ -34,7 +34,7 @@ def test_transit_calculation(fixture: Any, fixture_with_usd: Any) -> None:
     :return: тестовая функция ничего не возвращает
     """
     assert transit_calculation(fixture) == 31957.58
-    assert transit_calculation(fixture_with_usd) == 750257.56
+    assert transit_calculation(fixture_with_usd) == round(8221.37 * get_currency_exchange_rate("USD"), 2)
 
 
 @patch("requests.get")
