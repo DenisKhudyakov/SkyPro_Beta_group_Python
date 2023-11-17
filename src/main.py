@@ -1,9 +1,22 @@
 import json
 
+from data.config import FILE_PATH_TRANSACTIONS
 from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
+from src.logger import setup_logging
+from src.masks import maskin_bil_number, masking_the_card
 from src.processing import sorted_operation
+from src.utils import transit_calculation
+
+logger = setup_logging()
 
 if __name__ == "__main__":
+    logger.info("Старт приложения")
+    print(maskin_bil_number("123456789123"))
+    print(maskin_bil_number("123456"))
+    print(masking_the_card("73654108430135874305"))
+    with open(FILE_PATH_TRANSACTIONS, "r", encoding="UTF-8") as f:
+        bank_data = json.load(f)
+        transit_calculation(bank_data[0])
     with open("../data/transactions.json", "r") as file:
         transactions = json.load(file)
         usd_transactions = filter_by_currency(transactions, "RUB")
@@ -38,3 +51,4 @@ if __name__ == "__main__":
             ]
         )
     )
+    logger.info("Конец приложения")

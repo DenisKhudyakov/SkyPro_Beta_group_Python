@@ -6,8 +6,11 @@ from typing import Any, Callable
 import requests
 from dotenv import load_dotenv
 
-from data.config import FILE_PATH_CURRENCY
 from src.generators import filter_by_currency
+from src.logger import setup_error_logging, setup_logging
+
+logging = setup_logging()
+logging_error = setup_error_logging()
 
 
 def get_api() -> tuple:
@@ -45,10 +48,13 @@ def converter_change(func_with_currency_rate: Callable, currensy: str = "USD") -
     def wrapper(func: Callable) -> Callable:
         @functools.wraps(func)
         def inner(*args: Any, **kwargs: Any) -> Any:
+            logging.info("Запуск конвертации валюты")
             try:
                 result = func(*args, **kwargs)
             except ValueError:
+                logging_error.error("Подан словарь с валютой USD")
                 result = round(float(args[0]["operationAmount"]["amount"]) * func_with_currency_rate(currensy), 2)
+            logging.info("Конвертация валюты завершена")
             return result
 
         return inner
@@ -77,7 +83,7 @@ def transit_calculation(operation: dict) -> float | ValueError:
     :param operation: словарь с транзакцией
     :return: сумма перевода или исключение
     """
-
+    logging.info("Запуск функции обработки транзакции")
     if operation["operationAmount"]["currency"]["code"] == "RUB":
         return float(operation["operationAmount"]["amount"])
     else:
