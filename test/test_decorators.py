@@ -2,7 +2,7 @@ import datetime
 
 import pytest
 
-from src.decorators import my_function, my_function1, my_function2, log
+from src.decorators import log, my_function, my_function1, my_function2
 
 
 @pytest.fixture
@@ -38,7 +38,7 @@ def test_my_function1(numbers_and_data: tuple) -> None:
     date_time, a, b = numbers_and_data
     my_function1(a, b)
     with open("mylog.txt", "r") as f:
-        result = f'{date_time} {my_function1.__name__} error: <division by zero>. Inputs: (({a}, {b}), {{}})'
+        result = f"{date_time} {my_function1.__name__} error: <division by zero>. Inputs: (({a}, {b}), {{}})"
         log_text = f.read().strip().split("\n")
         assert result in log_text
 

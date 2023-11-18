@@ -4,12 +4,13 @@ from typing import Any
 
 import pytest
 
+from data.config import FILE_PATH_TRANSACTIONS
 from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 
 
 @pytest.fixture
-def bank_data() -> list:
-    with open(os.path.join("src", "transactions.json"), "r") as file:
+def bank_data() -> Any:
+    with open(FILE_PATH_TRANSACTIONS, "r") as file:
         transactions = json.load(file)
         return transactions
 

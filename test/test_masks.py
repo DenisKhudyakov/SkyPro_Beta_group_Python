@@ -7,7 +7,7 @@ def test_masking_the_card() -> None:
     :return: Тестовая фукнция ничего не возвращает
     """
     assert masking_the_card("7000792289606361") == "7000 79** **** 6361"
-    assert masking_the_card("") == ""
+    assert masking_the_card("") is None
 
 
 def test_maskin_bil_number() -> None:

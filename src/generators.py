@@ -11,6 +11,7 @@ def filter_by_currency(bank_obj: Any, currency: str) -> Generator:
     # Первое решение
     # return filter(lambda money_type: money_type["operationAmount"]["currency"]["code"] == currency, bank_obj)
     # Второе решение
+
     for money_type in bank_obj:
         if money_type["operationAmount"]["currency"]["code"] == currency:
             yield money_type
@@ -33,7 +34,7 @@ def card_number_generator(start: int, end: int) -> Generator:
     :param end: конечный диапазон номеров карт
     :return: возвращаем генратор со строковыми значениями номеров карт
     """
-    number_card_ver2 = ((16 * "0")[0 : -len(str(number))] + str(number) for number in range(start, end + 1))
+    number_card_ver2 = ((16 * "0")[0: -len(str(number))] + str(number) for number in range(start, end + 1))
     # number = "0000000000000000"
     # for i in range(start, end + 1):
     #     number_card = number[0 : -len(str(i))] + str(i)

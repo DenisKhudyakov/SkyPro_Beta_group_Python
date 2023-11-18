@@ -1,6 +1,6 @@
 import datetime
 import functools
-from typing import Callable, Any
+from typing import Any, Callable
 
 
 def log(*, filename: str = "") -> Callable:
@@ -12,8 +12,8 @@ def log(*, filename: str = "") -> Callable:
 
     def wrapper(func: Callable) -> Callable:
         @functools.wraps(func)
-        def inner(*args, **kwargs):
-            date_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        def inner(*args: Any, **kwargs: Any) -> Any:
+            date_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             try:
                 func(*args, **kwargs)
                 if filename:
@@ -31,9 +31,7 @@ def log(*, filename: str = "") -> Callable:
                         )
                 else:
                     print(
-                        "{} {} error: <{}>. Inputs: ({}, {})\n".format(
-                            date_time, func.__name__, str(ex), args, kwargs
-                        )
+                        "{} {} error: <{}>. Inputs: ({}, {})\n".format(date_time, func.__name__, str(ex), args, kwargs)
                     )
 
         return inner
@@ -42,17 +40,17 @@ def log(*, filename: str = "") -> Callable:
 
 
 @log(filename="mylog.txt")
-def my_function(x, y):
+def my_function(x: int, y: int) -> int:
     return x + y
 
 
 @log(filename="mylog.txt")
-def my_function1(x, y):
+def my_function1(x: int, y: int) -> float:
     return x + y / 0
 
 
 @log()
-def my_function2(x, y):
+def my_function2(x: int, y: int) -> int:
     return x + y
 
 
