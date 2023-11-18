@@ -15,7 +15,7 @@ def masking_the_card(number_card: str) -> str | Any:
     logging.info("Запустилась функция форматирования банковской карты")
     return (
         " ".join([number_card[0:4], number_card[4:6] + "**", "****", number_card[12:16]])
-        if len(number_card) == 12
+        if len(number_card) == 16
         else logging.error("Осторожно введен некорректный номер")
     )
 

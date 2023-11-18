@@ -13,7 +13,7 @@ if __name__ == "__main__":
     logger.info("Старт приложения")
     print(maskin_bil_number("123456789123"))
     print(maskin_bil_number("123456"))
-    print(masking_the_card("73654108430135874305"))
+    print(masking_the_card("7365410843013587"))
     with open(FILE_PATH_TRANSACTIONS, "r", encoding="UTF-8") as f:
         bank_data = json.load(f)
         transit_calculation(bank_data[0])
