@@ -5,16 +5,14 @@ import pandas as pd
 from data.config import PATH_CSV_FILE, PATH_XLSX_FILE
 
 
-
-
-def transformation_of_the_structure(list_: list) -> list:
+def transformation_of_the_structure(list_: list) -> Any:
     """
     Функция преобразования входного списка в словарь заданной структуры
     :param list_: список с банковскими данными
     :param struct: необходимая структура словаря
     :return: возвращемое значение список со словарём
     """
-    one_transactions = {
+    one_transactions: Any = {
         "id": None,
         "state": None,
         "date": None,
@@ -50,7 +48,7 @@ def read_xlsx_csv_file(file: Any) -> Any:
         for row in df.iterrows():
             yield transformation_of_the_structure(row[1].tolist())
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     # print(next(read_xlsx_csv_file(PATH_XLSX_FILE)))
     print(list(read_xlsx_csv_file(PATH_CSV_FILE)))
-
