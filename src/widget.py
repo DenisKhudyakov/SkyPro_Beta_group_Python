@@ -41,5 +41,5 @@ def date_time_formatter(data_and_time: str) -> str:
         datetime.strptime(data_and_time[:-7], pattern).strftime(format) if data_and_time else "Что-то пошло не так..."
     )
 
-
-print(bank_data_conversion("Visa Classic 6831982476737658"))
+if __name__ == '__main__':
+    print(bank_data_conversion("Visa Classic 6831982476737658"))

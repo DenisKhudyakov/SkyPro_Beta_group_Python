@@ -1,54 +1,44 @@
-import json
-
-from data.config import FILE_PATH_TRANSACTIONS
-from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
-from src.logger import setup_logging
+# маскировка номеров карт и счетов
 from src.masks import maskin_bil_number, masking_the_card
-from src.processing import sorted_operation
-from src.utils import transit_calculation
+# маскировка строки с номером в зависимости от типа (Счет или карта)
+from src.widget import bank_data_conversion
+# фильтровка списка транзакций по статусу (статус передается параметром),
+# сортировка по дате списка транзакций с указанием направления сортировки (по возрастанию/по убыванию)
+from src.processing import filter_operations, sorted_operation
+# 1) функция-генератор с сортировкой списка транзакций по валюте
+# 2) функция-генератор возвращающая описание каждой операции из списка транзакций
+# 3) генератор номеров карт в заданном диапазоне
+from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
+# функция чтения json файла
+from src.utils import get_json
+# функция чтения csv файла, функция чтения excel файла
+from src.read_the_table import read_xlsx_csv_file
+# функция поиска операций с определенными словами в описании
+# функция подсчета количества операций определенной категории
+from src.processing import operation_search, operation_counter
 
-logger = setup_logging()
+def main():
+    while True:
+        print("""
+Программа: Привет! Добро пожаловать в программу работы с банковскими транзакициями. 
+Выберите необходимый пункт меню:
+1. Получить информацию о транзакциях из json файла
+2. Получить информацию о транзакциях из csv файла
+3. Получить информацию о транзакциях из xlsx файла
+Для выхода нажмите "q"
+""")
+        answer_user = input('Пользователь: ')
+        match answer_user:
+            case '1':
+                print('читаем json')
+            case '2':
+                print('Читаем csv')
+            case '3':
+                print('читаем xlsx')
+            case 'q':
+                print('Приложение завершается')
+                break
+
 
 if __name__ == "__main__":
-    logger.info("Старт приложения")
-    print(maskin_bil_number("123456789123"))
-    print(maskin_bil_number("123456"))
-    print(masking_the_card("7365410843013587"))
-    with open(FILE_PATH_TRANSACTIONS, "r", encoding="UTF-8") as f:
-        bank_data = json.load(f)
-        transit_calculation(bank_data[0])
-    with open("../data/transactions.json", "r") as file:
-        transactions = json.load(file)
-        usd_transactions = filter_by_currency(transactions, "RUB")
-        for _ in range(2):
-            print(next(usd_transactions)["id"])
-        descriptions = transaction_descriptions(transactions)
-        for _ in range(5):
-            print(next(descriptions))
-
-    for card_number in card_number_generator(1, 5):
-        print(card_number)
-
-    print(
-        sorted_operation(
-            [
-                {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
-                {
-                    "id": 939719570,
-                    "state": "EXECUTED",
-                    "date": "2018-06-30T02:08:58.425572",
-                },
-                {
-                    "id": 594226727,
-                    "state": "CANCELED",
-                    "date": "2018-09-12T21:27:25.241689",
-                },
-                {
-                    "id": 615064591,
-                    "state": "CANCELED",
-                    "date": "2018-10-14T08:21:33.419441",
-                },
-            ]
-        )
-    )
-    logger.info("Конец приложения")
+    main()
