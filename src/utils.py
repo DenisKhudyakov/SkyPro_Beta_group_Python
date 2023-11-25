@@ -1,6 +1,7 @@
 import functools
 import json
 import os
+import pathlib
 from typing import Any, Callable
 
 import requests
@@ -62,7 +63,7 @@ def converter_change(func_with_currency_rate: Callable, currensy: str = "USD") -
     return wrapper
 
 
-def get_json(any_path: str) -> Any:
+def get_json(any_path: pathlib.Path) -> Any:
     """
     Функция получает на вход путь до файла, и выводит список со словарями
     :param any_path: путь в виде строки

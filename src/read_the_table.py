@@ -50,5 +50,4 @@ def read_xlsx_csv_file(file: Any) -> Any:
 
 
 if __name__ == "__main__":
-    # print(next(read_xlsx_csv_file(PATH_XLSX_FILE)))
     print(list(read_xlsx_csv_file(PATH_CSV_FILE)))

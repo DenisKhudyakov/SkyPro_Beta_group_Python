@@ -21,7 +21,7 @@ def filter_operations(operation_list: list[dict[Any, Any]], state_value: str = "
     return list(filter(lambda x: x["state"] == state_value, operation_list)) if operation_list else None
 
 
-def sorted_operation(operation_list: list[dict[Any, Any]], revers: bool = False) -> list[dict[Any, Any]] | None:
+def sorted_operation(operation_list: list[Any] | None, revers: bool = False) -> list[dict[Any, Any]] | None:
     """
         функцию, которая принимает на вход список словарей и возвращает новый список,
         в котором исходные словари отсортированы по убыванию даты (ключ

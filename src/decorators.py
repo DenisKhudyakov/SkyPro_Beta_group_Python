@@ -24,15 +24,9 @@ def log(*, filename: str = "") -> Callable:
             except Exception as ex:
                 if filename:
                     with open(filename, "a") as f:
-                        f.write(
-                            "{} {} error: <{}>. Inputs: ({}, {})\n".format(
-                                date_time, func.__name__, str(ex), args, kwargs
-                            )
-                        )
+                        f.write("{} {} error: <{}>. Inputs: ({}, {})\n".format(date_time, func.__name__, str(ex), args, kwargs))
                 else:
-                    print(
-                        "{} {} error: <{}>. Inputs: ({}, {})\n".format(date_time, func.__name__, str(ex), args, kwargs)
-                    )
+                    print("{} {} error: <{}>. Inputs: ({}, {})\n".format(date_time, func.__name__, str(ex), args, kwargs))
 
         return inner
 
