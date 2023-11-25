@@ -35,11 +35,16 @@ def date_time_formatter(data_and_time: str) -> str:
     :param data_and_time: строковое значение даты и времени
     :return: отформатированная дата
     """
-    pattern = "%Y-%m-%dT%H:%M:%S"
+    pattern = "%Y-%m-%dT%H:%M:%S.%f"
+    pattern2 = "%Y-%m-%dT%H:%M:%SZ"
     format = "%d.%m.%Y"
     return (
-        datetime.strptime(data_and_time[:-7], pattern).strftime(format) if data_and_time else "Что-то пошло не так..."
+        datetime.strptime(data_and_time, pattern).strftime(format)
+        if len(data_and_time) > 20
+        else datetime.strptime(data_and_time, pattern2).strftime(format)
     )
 
 
-print(bank_data_conversion("Visa Classic 6831982476737658"))
+if __name__ == "__main__":
+    # print(bank_data_conversion("Visa Classic 6831982476737658"))
+    print(date_time_formatter("2018-03-23T10:45:06.972075"))
